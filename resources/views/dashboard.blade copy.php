@@ -10,6 +10,10 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     {{ __("You're logged in!") }}
+
+
+                    1)category er jonno migration,model,controller er code kora hoyeche 22 April. Category view er kaj Pending
+                    2)Next Student module er kaj.
                 </div>
             </div>
         </div>

@@ -7,7 +7,7 @@
 
 
     <div class="dch-center">
-        DHAKA COMMUNITY MEDICAL COLLEGE HOSPITAL
+        DHAKA COMMUNITY MEDICAL COLLEGE LIBRARY 
     </div>
 
 
