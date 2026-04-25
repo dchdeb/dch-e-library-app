@@ -11,6 +11,7 @@ class Student extends Model
 
     protected $fillable = [
         'student_id',
+        'library_card_id',
         'name',
         'email',
         'phone',
@@ -30,18 +31,18 @@ class Student extends Model
         'is_active' => 'boolean',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
+    // protected static function boot()
+    // {
+    //     parent::boot();
 
-        static::creating(function ($student) {
-            if (empty($student->student_id)) {
-                $year = now()->year;
-                $count = Student::whereYear('created_at', $year)->count() + 1;
-                $student->student_id = 'STU-' . $year . '-' . str_pad($count, 5, '0', STR_PAD_LEFT);
-            }
-        });
-    }
+    //     static::creating(function ($student) {
+    //         if (empty($student->student_id)) {
+    //             $year = now()->year;
+    //             $count = Student::whereYear('created_at', $year)->count() + 1;
+    //             $student->student_id = 'STU-' . $year . '-' . str_pad($count, 5, '0', STR_PAD_LEFT);
+    //         }
+    //     });
+    // }
 
     // public function issues()
     // {

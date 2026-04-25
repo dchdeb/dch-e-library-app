@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('student_id')->unique();
-            $table->foreignId('library_card_id')->nullable()->unique();
+            $table->string('library_card_id')->nullable()->unique();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone')->nullable();
@@ -24,7 +24,6 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
-
             $table->index('is_active');
             $table->index('department');
         });

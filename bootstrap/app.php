@@ -19,3 +19,21 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
+
+
+
+ 
+
+    
+
+
+    
+
+    // ->withRouting(
+    // web: __DIR__.'/../routes/web.php',
+    // ...
+    // then: function () {
+    //     Route::middleware('web')
+    //         ->group(__DIR__.'/../routes/library.php');
+    // },
+    // )

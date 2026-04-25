@@ -26,7 +26,10 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // ========== CATEGORIES ==========
-    // IMPORTANT: Static routes MUST come BEFORE dynamic routes ({category})
+    Route::middleware('permission:category.view')->group(function () {
+        Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
+        Route::get('categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
+    });
     Route::middleware('permission:category.create')->group(function () {
         Route::get('categories/create', [CategoryController::class, 'create'])->name('categories.create');
         Route::post('categories', [CategoryController::class, 'store'])->name('categories.store');
@@ -35,16 +38,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
         Route::put('categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
     });
-    Route::middleware('permission:category.view')->group(function () {
-        Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
-        Route::get('categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
-    });
     Route::middleware('permission:category.delete')->group(function () {
         Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
     });
 
     // ========== AUTHORS ==========
-    // IMPORTANT: Static routes MUST come BEFORE dynamic routes ({author})
+    Route::middleware('permission:author.view')->group(function () {
+        Route::get('authors', [AuthorController::class, 'index'])->name('authors.index');
+        Route::get('authors/{author}', [AuthorController::class, 'show'])->name('authors.show');
+    });
     Route::middleware('permission:author.create')->group(function () {
         Route::get('authors/create', [AuthorController::class, 'create'])->name('authors.create');
         Route::post('authors', [AuthorController::class, 'store'])->name('authors.store');
@@ -53,16 +55,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('authors/{author}/edit', [AuthorController::class, 'edit'])->name('authors.edit');
         Route::put('authors/{author}', [AuthorController::class, 'update'])->name('authors.update');
     });
-    Route::middleware('permission:author.view')->group(function () {
-        Route::get('authors', [AuthorController::class, 'index'])->name('authors.index');
-        Route::get('authors/{author}', [AuthorController::class, 'show'])->name('authors.show');
-    });
     Route::middleware('permission:author.delete')->group(function () {
         Route::delete('authors/{author}', [AuthorController::class, 'destroy'])->name('authors.destroy');
     });
 
     // ========== RACKS (Location Rack) ==========
-    // IMPORTANT: Static routes MUST come BEFORE dynamic routes ({rack})
+    Route::middleware('permission:rack.view')->group(function () {
+        Route::get('racks', [RackController::class, 'index'])->name('racks.index');
+        Route::get('racks/{rack}', [RackController::class, 'show'])->name('racks.show');
+    });
     Route::middleware('permission:rack.create')->group(function () {
         Route::get('racks/create', [RackController::class, 'create'])->name('racks.create');
         Route::post('racks', [RackController::class, 'store'])->name('racks.store');
@@ -71,16 +72,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('racks/{rack}/edit', [RackController::class, 'edit'])->name('racks.edit');
         Route::put('racks/{rack}', [RackController::class, 'update'])->name('racks.update');
     });
-    Route::middleware('permission:rack.view')->group(function () {
-        Route::get('racks', [RackController::class, 'index'])->name('racks.index');
-        Route::get('racks/{rack}', [RackController::class, 'show'])->name('racks.show');
-    });
     Route::middleware('permission:rack.delete')->group(function () {
         Route::delete('racks/{rack}', [RackController::class, 'destroy'])->name('racks.destroy');
     });
 
     // ========== BOOKS ==========
-    // IMPORTANT: Static routes MUST come BEFORE dynamic routes ({book})
+    Route::middleware('permission:book.view')->group(function () {
+        Route::get('books', [BookController::class, 'index'])->name('books.index');
+        Route::get('books/{book}', [BookController::class, 'show'])->name('books.show');
+    });
     Route::middleware('permission:book.create')->group(function () {
         Route::get('books/create', [BookController::class, 'create'])->name('books.create');
         Route::post('books', [BookController::class, 'store'])->name('books.store');
@@ -89,16 +89,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('books/{book}/edit', [BookController::class, 'edit'])->name('books.edit');
         Route::put('books/{book}', [BookController::class, 'update'])->name('books.update');
     });
-    Route::middleware('permission:book.view')->group(function () {
-        Route::get('books', [BookController::class, 'index'])->name('books.index');
-        Route::get('books/{book}', [BookController::class, 'show'])->name('books.show');
-    });
     Route::middleware('permission:book.delete')->group(function () {
         Route::delete('books/{book}', [BookController::class, 'destroy'])->name('books.destroy');
     });
 
     // ========== STUDENTS ==========
-    // IMPORTANT: Static routes MUST come BEFORE dynamic routes ({student})
+    Route::middleware('permission:student.view')->group(function () {
+        Route::get('students', [StudentController::class, 'index'])->name('students.index');
+        Route::get('students/{student}', [StudentController::class, 'show'])->name('students.show');
+    });
     Route::middleware('permission:student.create')->group(function () {
         Route::get('students/create', [StudentController::class, 'create'])->name('students.create');
         Route::post('students', [StudentController::class, 'store'])->name('students.store');
@@ -107,16 +106,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('students/{student}/edit', [StudentController::class, 'edit'])->name('students.edit');
         Route::put('students/{student}', [StudentController::class, 'update'])->name('students.update');
     });
-    Route::middleware('permission:student.view')->group(function () {
-        Route::get('students', [StudentController::class, 'index'])->name('students.index');
-        Route::get('students/{student}', [StudentController::class, 'show'])->name('students.show');
-    });
     Route::middleware('permission:student.delete')->group(function () {
         Route::delete('students/{student}', [StudentController::class, 'destroy'])->name('students.destroy');
     });
 
     // ========== DOCTORS ==========
-    // IMPORTANT: Static routes MUST come BEFORE dynamic routes ({doctor})
+    Route::middleware('permission:doctor.view')->group(function () {
+        Route::get('doctors', [DoctorController::class, 'index'])->name('doctors.index');
+        Route::get('doctors/{doctor}', [DoctorController::class, 'show'])->name('doctors.show');
+    });
     Route::middleware('permission:doctor.create')->group(function () {
         Route::get('doctors/create', [DoctorController::class, 'create'])->name('doctors.create');
         Route::post('doctors', [DoctorController::class, 'store'])->name('doctors.store');
@@ -125,16 +123,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('doctors/{doctor}/edit', [DoctorController::class, 'edit'])->name('doctors.edit');
         Route::put('doctors/{doctor}', [DoctorController::class, 'update'])->name('doctors.update');
     });
-    Route::middleware('permission:doctor.view')->group(function () {
-        Route::get('doctors', [DoctorController::class, 'index'])->name('doctors.index');
-        Route::get('doctors/{doctor}', [DoctorController::class, 'show'])->name('doctors.show');
-    });
     Route::middleware('permission:doctor.delete')->group(function () {
         Route::delete('doctors/{doctor}', [DoctorController::class, 'destroy'])->name('doctors.destroy');
     });
 
     // ========== ISSUE BOOKS ==========
-    // IMPORTANT: Static routes MUST come BEFORE dynamic routes ({issueBook})
+    Route::middleware('permission:issue-book.view')->group(function () {
+        Route::get('issue-books', [IssueBookController::class, 'index'])->name('issue-books.index');
+        Route::get('issue-books/{issueBook}', [IssueBookController::class, 'show'])->name('issue-books.show');
+        Route::get('issue-books/overdue', [IssueBookController::class, 'overdue'])->name('issue-books.overdue');
+    });
     Route::middleware('permission:issue-book.create')->group(function () {
         Route::get('issue-books/create', [IssueBookController::class, 'create'])->name('issue-books.create');
         Route::post('issue-books', [IssueBookController::class, 'store'])->name('issue-books.store');
@@ -145,17 +143,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('issue-books/{issueBook}/edit', [IssueBookController::class, 'edit'])->name('issue-books.edit');
         Route::put('issue-books/{issueBook}', [IssueBookController::class, 'update'])->name('issue-books.update');
     });
-    Route::middleware('permission:issue-book.view')->group(function () {
-        Route::get('issue-books', [IssueBookController::class, 'index'])->name('issue-books.index');
-        Route::get('issue-books/overdue', [IssueBookController::class, 'overdue'])->name('issue-books.overdue');
-        Route::get('issue-books/{issueBook}', [IssueBookController::class, 'show'])->name('issue-books.show');
-    });
     Route::middleware('permission:issue-book.delete')->group(function () {
         Route::delete('issue-books/{issueBook}', [IssueBookController::class, 'destroy'])->name('issue-books.destroy');
     });
 
     // ========== DAILY REPORTS ==========
-    // IMPORTANT: Static routes MUST come BEFORE dynamic routes ({dailyReport})
+    Route::middleware('permission:daily-report.view')->group(function () {
+        Route::get('daily-reports', [DailyReportController::class, 'index'])->name('daily-reports.index');
+        Route::get('daily-reports/{dailyReport}', [DailyReportController::class, 'show'])->name('daily-reports.show');
+    });
     Route::middleware('permission:daily-report.create')->group(function () {
         Route::get('daily-reports/create', [DailyReportController::class, 'create'])->name('daily-reports.create');
         Route::post('daily-reports', [DailyReportController::class, 'store'])->name('daily-reports.store');
@@ -167,13 +163,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('permission:daily-report.export')->group(function () {
         Route::get('daily-reports/export', [DailyReportController::class, 'export'])->name('daily-reports.export');
     });
-    Route::middleware('permission:daily-report.view')->group(function () {
-        Route::get('daily-reports', [DailyReportController::class, 'index'])->name('daily-reports.index');
-        Route::get('daily-reports/{dailyReport}', [DailyReportController::class, 'show'])->name('daily-reports.show');
-    });
 
     // ========== BOOK INVENTORY ==========
-    // IMPORTANT: Static routes MUST come BEFORE dynamic routes ({bookInventory})
+    Route::middleware('permission:book-inventory.view')->group(function () {
+        Route::get('book-inventories', [BookInventoryController::class, 'index'])->name('book-inventories.index');
+        Route::get('book-inventories/{bookInventory}', [BookInventoryController::class, 'show'])->name('book-inventories.show');
+        Route::get('book-inventories/report', [BookInventoryController::class, 'report'])->name('book-inventories.report');
+    });
     Route::middleware('permission:book-inventory.create')->group(function () {
         Route::get('book-inventories/create', [BookInventoryController::class, 'create'])->name('book-inventories.create');
         Route::post('book-inventories', [BookInventoryController::class, 'store'])->name('book-inventories.store');
@@ -181,14 +177,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('permission:book-inventory.export')->group(function () {
         Route::get('book-inventories/export', [BookInventoryController::class, 'export'])->name('book-inventories.export');
     });
-    Route::middleware('permission:book-inventory.view')->group(function () {
-        Route::get('book-inventories', [BookInventoryController::class, 'index'])->name('book-inventories.index');
-        Route::get('book-inventories/report', [BookInventoryController::class, 'report'])->name('book-inventories.report');
-        Route::get('book-inventories/{bookInventory}', [BookInventoryController::class, 'show'])->name('book-inventories.show');
-    });
 
     // ========== PUNISHMENTS ==========
-    // IMPORTANT: Static routes MUST come BEFORE dynamic routes ({punishment})
+    Route::middleware('permission:punishment.view')->group(function () {
+        Route::get('punishments', [PunishmentController::class, 'index'])->name('punishments.index');
+        Route::get('punishments/{punishment}', [PunishmentController::class, 'show'])->name('punishments.show');
+    });
     Route::middleware('permission:punishment.create')->group(function () {
         Route::get('punishments/create', [PunishmentController::class, 'create'])->name('punishments.create');
         Route::post('punishments', [PunishmentController::class, 'store'])->name('punishments.store');
@@ -199,10 +193,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('permission:punishment.edit')->group(function () {
         Route::get('punishments/{punishment}/edit', [PunishmentController::class, 'edit'])->name('punishments.edit');
         Route::put('punishments/{punishment}', [PunishmentController::class, 'update'])->name('punishments.update');
-    });
-    Route::middleware('permission:punishment.view')->group(function () {
-        Route::get('punishments', [PunishmentController::class, 'index'])->name('punishments.index');
-        Route::get('punishments/{punishment}', [PunishmentController::class, 'show'])->name('punishments.show');
     });
     Route::middleware('permission:punishment.delete')->group(function () {
         Route::delete('punishments/{punishment}', [PunishmentController::class, 'destroy'])->name('punishments.destroy');

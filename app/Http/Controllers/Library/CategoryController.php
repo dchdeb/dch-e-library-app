@@ -25,7 +25,18 @@ class CategoryController extends Controller
 
         // return view('library.categories.index', compact('categories'));
 
-        return view('library.categories.index');
+
+
+        $categories = Category::select(
+            'id',
+            'name',
+            'slug',
+            'is_active'
+        )
+            ->latest()
+            ->get();
+
+        return view('library.categories.index', compact('categories'));
     }
 
     public function create()
@@ -33,16 +44,36 @@ class CategoryController extends Controller
         return view('library.categories.create');
     }
 
+    // public function store(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'name' => 'required|string|max:255|unique:categories,name',
+    //         'description' => 'nullable|string',
+    //         'is_active' => 'boolean',
+    //     ]);
+
+    //     dd($validated);
+
+    //     $validated['created_by'] = auth()->id();
+    //     $validated['is_active'] = $request->has('is_active');
+
+    //     Category::create($validated);
+
+    //     return redirect()->route('categories.index')
+    //         ->with('success', 'Category created successfully!');
+    // }
+
+
     public function store(Request $request)
     {
+        // Fix: is_active validation সরিয়ে দিলাম কারণ checkbox unchecked হলে field আসেই না
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:categories,name',
             'description' => 'nullable|string',
-            'is_active' => 'boolean',
         ]);
 
         $validated['created_by'] = auth()->id();
-        $validated['is_active'] = $request->has('is_active');
+        $validated['is_active'] = $request->has('is_active'); // checkbox থাকলে true, না থাকলে false
 
         Category::create($validated);
 
@@ -77,12 +108,24 @@ class CategoryController extends Controller
             ->with('success', 'Category updated successfully!');
     }
 
+    // public function destroy(Category $category)
+    // {
+    //     if ($category->books()->count() > 0) {
+    //         return back()->with('error', 'Cannot delete category with associated books!');
+    //     }
+
+    //     $category->delete();
+
+    //     return redirect()->route('categories.index')
+    //         ->with('success', 'Category deleted successfully!');
+    // }
+
+
+
+
+    // Temporary Destry function
     public function destroy(Category $category)
     {
-        if ($category->books()->count() > 0) {
-            return back()->with('error', 'Cannot delete category with associated books!');
-        }
-
         $category->delete();
 
         return redirect()->route('categories.index')

@@ -4,13 +4,15 @@
     <a href="{{ route('dashboard') }}">Home</a>
     <span>›</span>
     <span>Book Management</span>
-    <span>(Category)</span>
+    <a href="{{route('categories.index')}}">(Category)</a>
+    <span class="breadcrumb-item active"> Add</span>
+    {{-- <span>(Category)</span> --}}
 @endsection
 
 @section('content')
 <div class="container-fluid py-4">
     {{-- Page Header --}}
-    <div class="library-page-header">
+    {{-- <div class="library-page-header">
         <h4><i class="bi bi-plus-circle me-2"></i>Add Category</h4>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -19,11 +21,11 @@
                 <li class="breadcrumb-item active">Add</li>
             </ol>
         </nav>
-    </div>
+    </div> --}}
 
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="form-card">
+            <div class="form-card p-4">
                 <div class="card-header">
                     <h6 class="mb-0"><i class="bi bi-tags me-2"></i>Category Information</h6>
                 </div>

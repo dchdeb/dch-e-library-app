@@ -22,7 +22,7 @@
                 </nav>
             </div> --}}
                 @can('category.create')
-                    <a href="{{ route('categories.create') }}" class="btn btn-outline-primary">
+                    <a href="{{ route('categories.create') }}" class="btn btn-outline-primary mb-1">
                         <i class="bi bi-plus-circle me-2"></i>Add Category
                     </a>
 
@@ -67,7 +67,7 @@
         </div>
 
         {{-- Data Table --}}
-        <div class="data-table-card">
+        <div class="data-table-card mt-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h6><i class="bi bi-table me-2"></i>Category List</h6>
                 {{-- <span class="badge bg-primary">{{ $categories->total() }} records</span> --}}
@@ -79,76 +79,83 @@
                             <th>#</th>
                             <th>Name</th>
                             <th>Slug</th>
-                            <th>Books</th>
+                            {{-- <th>Books</th> --}}
                             <th>Status</th>
                             <th class="text-center">Actions</th>
                         </tr>
                     </thead>
-                    {{-- <tbody>
-                    @forelse($categories as $category)
-                    <tr>
-                        <td>{{ $loop->iteration + ($categories->currentPage() - 1) * $categories->perPage() }}</td>
-                        <td>
-                            <strong>{{ $category->name }}</strong>
-                        </td>
-                        <td><code>{{ $category->slug }}</code></td>
-                        <td>
+                    <tbody>
+                        @forelse($categories as $category)
+                            <tr>
+                                {{-- <td>{{ $loop->iteration + ($categories->currentPage() - 1) * $categories->perPage() }}</td> --}}
+
+                                <td>{{ $category->id }}</td>
+                                <td>
+                                    <strong>{{ $category->name }}</strong>
+                                </td>
+                                <td><code>{{ $category->slug }}</code></td>
+                                {{-- <td>
                             <span class="badge bg-info">{{ $category->books_count ?? 0 }} books</span>
-                        </td>
-                        <td>
-                            @if ($category->is_active)
-                            <span class="status-badge active">Active</span>
-                            @else
-                            <span class="status-badge inactive">Inactive</span>
-                            @endif
-                        </td>
-                        <td class="text-center">
-                            <div class="btn-group btn-group-sm">
-                                @can('category.view')
-                                <a href="{{ route('categories.show', $category) }}" class="btn-action btn-view" title="View">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                                @endcan
-                                @can('category.edit')
-                                <a href="{{ route('categories.edit', $category) }}" class="btn-action btn-edit" title="Edit">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                @endcan
-                                @can('category.delete')
-                                <form action="{{ route('categories.destroy', $category) }}" method="POST" onsubmit="return confirm('Delete this category?')">
-                                    @csrf @method('DELETE')
-                                    <button type="submit" class="btn-action btn-delete" title="Delete">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </form>
-                                @endcan
-                            </div>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="6">
-                            <div class="empty-state">
-                                <i class="bi bi-tags"></i>
-                                <h5>No Categories Found</h5>
-                                <p>Start by adding a new category.</p>
-                                @can('category.create')
-                                <a href="{{ route('categories.create') }}" class="btn btn-primary">
-                                    <i class="bi bi-plus-circle me-1"></i>Add Category
-                                </a>
-                                @endcan
-                            </div>
-                        </td>
-                    </tr>
-                    @endforelse
-                </tbody> --}}
+                        </td> --}}
+                                <td>
+                                    @if ($category->is_active)
+                                        <span class="status-badge active">Active</span>
+                                    @else
+                                        <span class="status-badge inactive">Inactive</span>
+                                    @endif
+                                </td>
+
+
+                                <td class="text-center">
+                                    <div class="btn-group btn-group-sm">
+                                        {{-- @can('category.view')
+                                            <a href="{{ route('categories.show', $category) }}" class="btn-action btn-view"
+                                                title="View">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                        @endcan     Biochemistry  Physiology  Anatomy   Pathology  Microbiolog   Large and airconditioned reading area for the students.     --}}
+                                        @can('category.edit')
+                                            <a href="{{ route('categories.edit', $category) }}"  class="btn btn-outline-primary mx-1"
+                                                title="Edit">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                        @endcan
+                                        @can('category.delete')
+                                            <form action="{{ route('categories.destroy', $category) }}" method="POST"
+                                                onsubmit="return confirm('Delete this category?')">
+                                                @csrf @method('DELETE')
+                                                <button type="submit" class="btn btn-outline-danger" title="Delete">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        @endcan
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6">
+                                    <div class="empty-state">
+                                        <i class="bi bi-tags"></i>
+                                        <h5>No Categories Found</h5>
+                                        <p>Start by adding a new category.</p>
+                                        @can('category.create')
+                                            <a href="{{ route('categories.create') }}" class="btn btn-primary">
+                                                <i class="bi bi-plus-circle me-1"></i>Add Category
+                                            </a>
+                                        @endcan
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
                 </table>
             </div>
             {{-- @if ($categories->hasPages())
-        <div class="p-3 border-top">
-            {{ $categories->links() }}
-        </div>
-        @endif --}}
+                <div class="p-3 border-top">
+                    {{ $categories->links() }}
+                </div>
+            @endif --}}
         </div>
     </div>
 @endsection
