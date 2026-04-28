@@ -67,31 +67,35 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        
+
                         <th>Student Info</th>
                         <th>Department</th>
                         <th>Session</th>
-                        <th>Books Issued</th>
+                        {{-- <th>Books Issued</th> --}}
                         <th>Status</th>
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
-                {{-- <tbody>
+                <tbody>
                     @forelse($students as $student)
                     <tr>
-                        <td>{{ $loop->iteration + ($students->currentPage() - 1) * $students->perPage() }}</td>
+                        {{-- <td>{{ $loop->iteration + ($students->currentPage() - 1) * $students->perPage() }}</td> --}}
+                        <td>{{ $student->id }}</td>
                         <td>
+                            
                             <div class="member-card">
-                                <div class="member-avatar">{{ strtoupper(substr($student->name, 0, 1)) }}</div>
+                                
+                                {{-- <div class="member-avatar">{{ strtoupper(substr($student->name, 0, 1)) }}</div> --}}
                                 <div class="member-info">
                                     <h6>{{ $student->name }}</h6>
                                     <small>{{ $student->student_id }}</small>
+                                    <small>{{ $student->library_card_id}}</small>
                                 </div>
                             </div>
                         </td>
                         <td>{{ $student->department ?? '-' }}</td>
                         <td>{{ $student->session ?? '-' }}</td>
-                        <td><span class="badge bg-info">{{ $student->issues_count ?? 0 }}</span></td>
+                        {{-- <td><span class="badge bg-info">{{ $student->issues_count ?? 0 }}</span></td> --}}
                         <td>
                             @if($student->is_active)
                             <span class="status-badge active">Active</span>
@@ -101,20 +105,20 @@
                         </td>
                         <td class="text-center">
                             <div class="btn-group">
-                                @can('student.view')
+                                {{-- @can('student.view')
                                 <a href="{{ route('students.show', $student) }}" class="btn-action btn-view" title="View">
                                     <i class="bi bi-eye"></i>
                                 </a>
-                                @endcan
+                                @endcan --}}
                                 @can('student.edit')
-                                <a href="{{ route('students.edit', $student) }}" class="btn-action btn-edit" title="Edit">
+                                <a href="{{ route('students.edit',$students) }}   " class="btn btn-outline-primary mx-1" title="Edit">
                                     <i class="bi bi-pencil"></i>
                                 </a>
                                 @endcan
                                 @can('student.delete')
-                                <form action="{{ route('students.destroy', $student) }}" method="POST" onsubmit="return confirm('Delete this student?')">
+                                <form action="{{ route('students.destroy', $student->id) }}" method="POST" onsubmit="return confirm('Delete this student?')">
                                     @csrf @method('DELETE')
-                                    <button type="submit" class="btn-action btn-delete" title="Delete">
+                                    <button type="submit" class="btn btn-outline-danger" title="Delete">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>
@@ -133,7 +137,7 @@
                         </td>
                     </tr>
                     @endforelse
-                </tbody> --}}
+                </tbody>
             </table>
         </div>
         {{-- @if($students->hasPages())

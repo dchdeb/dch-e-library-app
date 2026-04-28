@@ -18,11 +18,11 @@
 
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="form-card">
-                    <div class="card-header">
-                        <h6 class="mb-0"><i class="bi bi-mortarboard me-2"></i>Student Information</h6>
+                <div class="form-card ">
+                    <div class="card-header pt-5 px-4">
+                        <h5 class="mb-0"><i class="bi bi-mortarboard me-2"></i>Student Information</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body p-4">
                         <form action="{{ route('students.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                         

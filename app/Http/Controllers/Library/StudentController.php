@@ -36,9 +36,25 @@ class StudentController extends Controller
         // $departments = Student::distinct()->pluck('department')->filter()->sort();
 
         // return view('library.students.index', compact('students', 'departments'));
+        $students = Student::select(
+            'id',
+            'student_id',
+            'library_card_id',
+            'name',
+            'email',
+            'phone',
+            'address',
+            'department',
+            'session',
+            'photo',
+            'is_active',
 
+        )
+            ->latest()
+            ->paginate(10);
+        return view('library.students.index', compact('students'));
 
-        return view('library.students.index');
+        // return view('library.students.index');
     }
 
     public function create()
@@ -78,54 +94,97 @@ class StudentController extends Controller
 
 
 
+    // public function store(Request $request)
+    // {
+    //     $validated = $request->validate([
+
+    //         'student_id' => 'required|string|max:50|unique:students,student_id',
+
+    //         'library_card_id' => 'required|string|max:50|unique:students,library_card_id',
+
+    //         'name' => 'required|string|max:255',
+
+    //         'email' => 'required|email|unique:students,email',
+
+    //         'phone' => 'nullable|string|max:20',
+
+    //         'address' => 'nullable|string',
+
+    //         'department' => 'nullable|string|max:100',
+
+    //         'session' => 'nullable|string|max:50',
+
+    //         'membership_date' => 'nullable|date',
+
+    //         'expiry_date' => 'nullable|date|after_or_equal:membership_date',
+
+    //         'photo' => 'nullable|image|max:2048',
+
+    //         'is_active' => 'boolean',
+    //     ]);
+
+    //     $validated['created_by'] = auth()->id();
+
+    //     $validated['is_active'] = $request->has('is_active');
+
+
+
+
+    //     if ($request->hasFile('photo')) {
+
+    //         $image = $request->file('photo');
+
+    //         $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+    //         $image->move(public_path('uploads/students'), $imageName);
+
+    //         $validated['photo'] = 'uploads/students/' . $imageName;
+    //     }
+
+    //     Student::create($validated);
+
+    //     return redirect()->route('students.index')
+    //         ->with('success', 'Student created successfully!');
+    // }
+
+
+
+
+
+
+
+
     public function store(Request $request)
     {
         $validated = $request->validate([
-
             'student_id' => 'required|string|max:50|unique:students,student_id',
-
             'library_card_id' => 'required|string|max:50|unique:students,library_card_id',
-
             'name' => 'required|string|max:255',
-
             'email' => 'required|email|unique:students,email',
-
             'phone' => 'nullable|string|max:20',
-
             'address' => 'nullable|string',
-
             'department' => 'nullable|string|max:100',
-
             'session' => 'nullable|string|max:50',
-
             'membership_date' => 'nullable|date',
-
             'expiry_date' => 'nullable|date|after_or_equal:membership_date',
-
             'photo' => 'nullable|image|max:2048',
 
-            'is_active' => 'boolean',
         ]);
 
         $validated['created_by'] = auth()->id();
-
-        $validated['is_active'] = $request->has('is_active');
-
-        // if ($request->hasFile('photo')) {
-
-        //     $validated['photo'] =
-        //         $request->file('photo')->store('students', 'public');
-        // }
-
+        $validated['is_active'] = $request->has('is_active'); // ✅ এটি ঠিক আছে
 
         if ($request->hasFile('photo')) {
+            $uploadPath = public_path('uploads/students');
+
+            //  Directory create করুন
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
 
             $image = $request->file('photo');
-
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-
-            $image->move(public_path('uploads/students'), $imageName);
-
+            $image->move($uploadPath, $imageName);
             $validated['photo'] = 'uploads/students/' . $imageName;
         }
 
@@ -152,25 +211,88 @@ class StudentController extends Controller
         return view('library.students.edit', compact('student'));
     }
 
+    // public function update(Request $request, Student $student)
+    // {
+    //     $validated = $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'email' => 'required|email|unique:students,email,' . $student->id,
+    //         'phone' => 'nullable|string|max:20',
+    //         'address' => 'nullable|string',
+    //         'department' => 'nullable|string|max:100',
+    //         'session' => 'nullable|string|max:50',
+    //         'membership_date' => 'nullable|date',
+    //         'expiry_date' => 'nullable|date|after_or_equal:membership_date',
+    //         'photo' => 'nullable|image|max:2048',
+    //         'is_active' => 'boolean',
+    //     ]);
+
+    //     $validated['is_active'] = $request->has('is_active');
+
+    //     if ($request->hasFile('photo')) {
+    //         $validated['photo'] = $request->file('photo')->store('students', 'public');
+    //     }
+
+    //     $student->update($validated);
+
+    //     return redirect()->route('students.index')
+    //         ->with('success', 'Student updated successfully!');
+    // }
+
+
+
+
+
+
+
+
+
+
+
+
     public function update(Request $request, Student $student)
     {
         $validated = $request->validate([
+
+            'student_id' => 'required|string|max:50|unique:students,student_id,' . $student->id,
+
+            'library_card_id' => 'required|string|max:50|unique:students,library_card_id,' . $student->id,
+
             'name' => 'required|string|max:255',
+
             'email' => 'required|email|unique:students,email,' . $student->id,
+
             'phone' => 'nullable|string|max:20',
+
             'address' => 'nullable|string',
+
             'department' => 'nullable|string|max:100',
+
             'session' => 'nullable|string|max:50',
+
             'membership_date' => 'nullable|date',
+
             'expiry_date' => 'nullable|date|after_or_equal:membership_date',
+
             'photo' => 'nullable|image|max:2048',
-            'is_active' => 'boolean',
         ]);
 
         $validated['is_active'] = $request->has('is_active');
 
         if ($request->hasFile('photo')) {
-            $validated['photo'] = $request->file('photo')->store('students', 'public');
+
+            $uploadPath = public_path('uploads/students');
+
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
+
+            $image = $request->file('photo');
+
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+            $image->move($uploadPath, $imageName);
+
+            $validated['photo'] = 'uploads/students/' . $imageName;
         }
 
         $student->update($validated);
@@ -179,12 +301,27 @@ class StudentController extends Controller
             ->with('success', 'Student updated successfully!');
     }
 
+
+
+
+
+    // public function destroy(Student $student)
+    // {
+    //     if ($student->issues()->where('status', 'issued')->count() > 0) {
+    //         return back()->with('error', 'Cannot delete student with active book issues!');
+    //     }
+
+    //     $student->delete();
+
+    //     return redirect()->route('students.index')
+    //         ->with('success', 'Student deleted successfully!');
+    // }
+
+
+
+
     public function destroy(Student $student)
     {
-        if ($student->issues()->where('status', 'issued')->count() > 0) {
-            return back()->with('error', 'Cannot delete student with active book issues!');
-        }
-
         $student->delete();
 
         return redirect()->route('students.index')

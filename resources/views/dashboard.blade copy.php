@@ -12,8 +12,29 @@
                     {{ __("You're logged in!") }}
 
 
-                    1)category er jonno migration,model,controller er code kora hoyeche 22 April. Category view er kaj Pending
+                    1)category er jonno migration,model,controller er code kora hoyeche. Category view er kaj Pending
                     2)Next Student module er kaj.
+                    3)
+                    // Super Admin
+                    $superAdmin = User::firstOrCreate(
+                    ['email' => 'admin@library.com'],
+                    [
+                    'name' => 'Super Admin',
+                    'password' => bcrypt('susmi123'),
+                    'email_verified_at' => now(),
+                    ]
+                    );
+                    $superAdmin->assignRole('Admin');
+
+                    // Demo Librarian
+                    $librarianUser = User::firstOrCreate(
+                    ['email' => 'librarian@library.com'],
+                    [
+                    'name' => 'Demo Librarian',
+                    'password' => bcrypt('librarian987'),
+                    'email_verified_at' => now(),
+                    ]
+                    );
                 </div>
             </div>
         </div>
